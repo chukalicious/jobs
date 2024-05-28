@@ -1,8 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const Jobs = require('../models/jobsModel');
+const { request } = require('express');
 
 const getJobs = asyncHandler(async (req, res) => {
-  const jobs = await Jobs.find({});
+  const jobs = await Jobs.find();
   if (jobs) {
     return res.status(200).json(jobs);
   }
@@ -10,8 +11,7 @@ const getJobs = asyncHandler(async (req, res) => {
 });
 
 const getJobById = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const job = await Jobs.findById({ id });
+  const job = await Jobs.findOne({ _id: req.params.id });
   if (job) {
     return res.status(200).json(job);
   }
