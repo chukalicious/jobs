@@ -5,6 +5,7 @@ const port = process.env.PORT || 8000;
 const cors = require('cors');
 const connectDB = require('./config/db');
 const jobsRoute = require('./route/jobsRoute');
+const authRoute = require('./route/authRoute');
 
 connectDB();
 
@@ -18,6 +19,7 @@ app.use(
 );
 
 app.use('/api/jobs', jobsRoute);
+app.use('/api/auth', authRoute);
 
 app.get('/', (req, res) => {
   res.send({ message: `Api is up 😊` });
