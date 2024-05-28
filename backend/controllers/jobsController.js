@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler');
 const Jobs = require('../models/jobsModel');
-const { request } = require('express');
 
 const getJobs = asyncHandler(async (req, res) => {
   const jobs = await Jobs.find();
@@ -40,4 +39,31 @@ const createJob = asyncHandler(async (req, res) => {
   res.status(201).json(newPosting);
 });
 
-module.exports = { getJobs, getJobById, createJob };
+const updateJob = asyncHandler(async (req, res) => {
+  const job = await Jobs.findById(req.params.id);
+  if (!job) {
+    res.status(404);
+    throw new Error('Job not found');
+  }
+  const { title, company, location, salary, description } = req.body;
+
+  const updatedJob = await Jobs.findByIdAndUpdate(
+    req.params.id,
+    {
+      title,
+      company,
+      location,
+      salary,
+      description,
+    },
+    { new: true }
+  );
+
+  if (!updatedJob) {
+    res.status(400);
+    throw new Error('Invalid job data');
+  }
+  res.status(201).json(updatedJob);
+});
+
+module.exports = { getJobs, getJobById, createJob, updateJob };
