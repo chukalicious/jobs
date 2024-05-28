@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Jobs = require('../models/jobsModel');
+const User = require('../models/authModel');
 
 const getJobs = asyncHandler(async (req, res) => {
   const jobs = await Jobs.find();
@@ -19,18 +20,26 @@ const getJobById = asyncHandler(async (req, res) => {
 });
 
 const createJob = asyncHandler(async (req, res) => {
-  const { title, company, location, salary, description } = req.body;
+  const { title, company, location, salary, description, authorID } = req.body;
+  const author = await User.findById(authorID);
 
   if (!title || !company || !location || !salary || !description) {
     res.status(400);
     throw new Error('Please provide all the required details');
   }
+
+  if (!author) {
+    res.status(404);
+    throw new Error('Author not found, cannot post anonymously. ');
+  }
+
   const newPosting = await Jobs.create({
     title,
     company,
     location,
     salary,
     description,
+    postedBy: authorID,
   });
   if (!newPosting) {
     res.status(400);

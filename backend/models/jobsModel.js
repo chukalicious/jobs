@@ -26,6 +26,11 @@ const jobSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  postedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'There is no user'],
+  },
 });
 
 module.exports = mongoose.model('Job', jobSchema);

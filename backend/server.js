@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8000;
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const jobsRoute = require('./route/jobsRoute');
 const authRoute = require('./route/authRoute');
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(bodyParser.json());
 
 app.use('/api/jobs', jobsRoute);
 app.use('/api/users', authRoute);
