@@ -5,9 +5,10 @@ const {
   getJobById,
   createJob,
   updateJob,
+  deleteJob,
 } = require('../controllers/jobsController');
 
 router.route('/').get(getJobs).post(createJob);
-router.route('/:id').get(getJobById).put(updateJob);
+router.route('/:id').get(getJobById).put(updateJob).delete(deleteJob);
 
 module.exports = router;

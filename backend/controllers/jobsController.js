@@ -66,4 +66,14 @@ const updateJob = asyncHandler(async (req, res) => {
   res.status(201).json(updatedJob);
 });
 
-module.exports = { getJobs, getJobById, createJob, updateJob };
+const deleteJob = asyncHandler(async (req, res) => {
+  const job = await Jobs.findById(req.params.id);
+  if (!job) {
+    res.status(404);
+    throw new Error('Job not found');
+  }
+  await Jobs.findByIdAndDelete(req.params.id);
+  res.status(200).json({ message: 'Job removed' });
+});
+
+module.exports = { getJobs, getJobById, createJob, updateJob, deleteJob };
