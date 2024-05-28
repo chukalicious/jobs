@@ -19,7 +19,9 @@ app.use(
 );
 
 app.use('/api/jobs', jobsRoute);
+app.use('/api/users', authRoute);
 app.use('/api/auth', authRoute);
+app.use('api/login', authRoute);
 
 app.get('/', (req, res) => {
   res.send({ message: `Api is up 😊` });
