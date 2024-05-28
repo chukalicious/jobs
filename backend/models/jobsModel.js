@@ -22,10 +22,6 @@ const jobSchema = new Schema({
     type: String,
     required: [true, 'Please provide a description'],
   },
-  email: {
-    type: String,
-    required: true,
-  },
   postedOnDate: {
     type: Date,
     default: Date.now,
