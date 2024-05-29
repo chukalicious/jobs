@@ -22,6 +22,7 @@ const getJobById = asyncHandler(async (req, res) => {
 const createJob = asyncHandler(async (req, res) => {
   const { title, company, location, salary, description, authorID } = req.body;
   const author = await User.findById(authorID);
+  console.log('BackEnd: JobsController: createJob: author', author);
 
   if (!title || !company || !location || !salary || !description) {
     res.status(400);
@@ -39,7 +40,10 @@ const createJob = asyncHandler(async (req, res) => {
     location,
     salary,
     description,
-    postedBy: authorID,
+    postedBy: {
+      id: author._id,
+      name: author.name,
+    },
   });
   if (!newPosting) {
     res.status(400);

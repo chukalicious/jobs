@@ -27,9 +27,13 @@ const jobSchema = new Schema({
     default: Date.now,
   },
   postedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'There is no user'],
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    name: {
+      type: String,
+    },
   },
 });
 
