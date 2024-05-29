@@ -8,6 +8,16 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -63,4 +73,4 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getAllUsers, registerUser, loginUser };
+module.exports = { getAllUsers, registerUser, loginUser, getUserById };
